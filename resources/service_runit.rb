@@ -87,7 +87,10 @@ action_class.class_eval do
     runit_service 'chef-push-jobs-client' do
       options('cli_command' => PushJobsHelper.cli_command(node))
       default_logger true
-      subscribes :restart, "template[#{PushJobsHelper.config_path}]"
+      # gshively: these changes prevents starting push jobs client before
+      # it's configured
+      subscribes :restart, "template[#{PushJobsHelper.config_path}]", :delayed
+      start_down true
     end
   end
 end
