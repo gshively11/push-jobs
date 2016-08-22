@@ -45,4 +45,5 @@ chef_ingredient 'push-jobs-client' do
   version package_version || node['push_jobs']['package_version']
   package_source "#{Chef::Config[:file_cache_path]}/#{package_file}" if package_url
   platform_version_compatibility_mode true
+  timeout 1500
 end
